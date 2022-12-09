@@ -12,7 +12,6 @@ import { geocode } from "@esri/arcgis-rest-geocoding";
 import { React, useEffect, useState } from "react";
 
 export default function App() {
-  const [categ, setCateg] = useState("");
   const [text, setText] = useState("");
   const [postal, setPostal] = useState("");
   const [long, setLong] = useState(null);
@@ -21,7 +20,8 @@ export default function App() {
   const [locationOne, setLocationOne] = useState("");
   const [addOne, setAddOne] = useState("");
 
-  const apiKey = "YOUR_API_KEY";
+  const apiKey =
+    "YOUR_API_KEY";
   const authentication = ApiKeyManager.fromKey(apiKey);
 
   const getCoords = () => {
@@ -66,27 +66,31 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Nearest Coffee Shop</Text>
-      <TextInput
-        onChangeText={(add) => setText(add)}
-        placeholder="Enter Address"
-        style={styles.textInput}
-      />
-      <TextInput
-        onChangeText={(stuff) => setPostal(stuff)}
-        placeholder="Enter Postal Code"
-        style={styles.textInput}
-      />
-      <StatusBar style="auto" />
-      <View style={styles.buttonContainer}>
-        <Pressable onPress={getCoords} style={styles.press}>
-          <Text style={styles.text}>Locate Shop</Text>
-        </Pressable>
+    <>
+      <View style={styles.container}>
+        <Text style={styles.title}>Nearest Coffee Shop</Text>
+        <TextInput
+          onChangeText={(add) => setText(add)}
+          placeholder="Enter Address"
+          style={styles.textInput}
+        />
+        <TextInput
+          onChangeText={(stuff) => setPostal(stuff)}
+          placeholder="Enter Postal Code"
+          style={styles.textInput}
+        />
+        <StatusBar style="auto" />
+        <View style={styles.buttonContainer}>
+          <Pressable onPress={getCoords} style={styles.press}>
+            <Text style={styles.text}>Locate Shop</Text>
+          </Pressable>
+        </View>
       </View>
-      <Text>{locationOne}</Text>
-      <Text>{addOne}</Text>
-    </View>
+      <View style={styles.shopStuff}>
+        <Text style={styles.shop}>{locationOne}</Text>
+        <Text style={styles.shop}>{addOne}</Text>
+      </View>
+    </>
   );
 }
 
@@ -130,4 +134,11 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginBottom: 15,
   },
+  shop: {
+    fontSize: 18,
+    marginBottom: 8
+  },
+  shopStuff: {
+    marginLeft: 20
+  }
 });
