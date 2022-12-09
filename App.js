@@ -6,6 +6,7 @@ import {
   TextInput,
   Pressable,
   LogBox,
+  Keyboard,
 } from "react-native";
 import { ApiKeyManager } from "@esri/arcgis-rest-request";
 import { geocode } from "@esri/arcgis-rest-geocoding";
@@ -46,6 +47,7 @@ export default function App() {
   };
 
   const getCoords = () => {
+    Keyboard.dismiss();
     geocode({
       address: text,
       postal: postal,
@@ -64,7 +66,6 @@ export default function App() {
     LogBox.ignoreAllLogs();
     if (long) {
       testAPI();
-      console.log(label);
     }
   }, [long, lat, label]);
 
@@ -100,7 +101,7 @@ export default function App() {
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder={!isFocus ? "Select item" : "..."}
+          placeholder={!isFocus ? "Select a Category of Shop" : "..."}
           searchPlaceholder="Search..."
           value={value}
           onFocus={() => setIsFocus(true)}
@@ -113,7 +114,6 @@ export default function App() {
         />
       </View>
       <View style={styles.container}>
-        <Text style={styles.title}>Nearest {label}</Text>
         <TextInput
           onChangeText={(add) => setText(add)}
           placeholder="Enter Address"
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   dropdown: {
-    height: 30,
+    height: 40,
     borderColor: "gray",
     borderWidth: 0.5,
     borderRadius: 8,
