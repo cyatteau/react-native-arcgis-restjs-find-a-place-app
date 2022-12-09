@@ -21,8 +21,7 @@ export default function App() {
   const [locationOne, setLocationOne] = useState("");
   const [addOne, setAddOne] = useState("");
 
-  const apiKey =
-    "YOUR_API_KEY";
+  const apiKey = "YOUR_API_KEY";
   const authentication = ApiKeyManager.fromKey(apiKey);
 
   const getCoords = () => {
@@ -46,7 +45,7 @@ export default function App() {
       setLocation(`${long},${lat}`);
       testAPI();
     }
-  });
+  }, [long, lat]);
 
   const testAPI = () => {
     geocode({
@@ -68,6 +67,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Nearest Coffee Shop</Text>
       <TextInput
         onChangeText={(add) => setText(add)}
         placeholder="Enter Address"
@@ -81,7 +81,7 @@ export default function App() {
       <StatusBar style="auto" />
       <View style={styles.buttonContainer}>
         <Pressable onPress={getCoords} style={styles.press}>
-          <Text style={styles.text}>Locate Address</Text>
+          <Text style={styles.text}>Locate Shop</Text>
         </Pressable>
       </View>
       <Text>{locationOne}</Text>
@@ -92,7 +92,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    marginTop: 100,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     margin: 10,
     borderColor: "#000000",
     borderWidth: 1,
+    width: 250,
   },
   press: {
     alignItems: "center",
@@ -124,5 +125,9 @@ const styles = StyleSheet.create({
   buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  title: {
+    fontSize: 30,
+    marginBottom: 15,
   },
 });
