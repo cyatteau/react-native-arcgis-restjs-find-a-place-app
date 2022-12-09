@@ -10,19 +10,40 @@ import {
 import { ApiKeyManager } from "@esri/arcgis-rest-request";
 import { geocode } from "@esri/arcgis-rest-geocoding";
 import { React, useEffect, useState } from "react";
+import { Dropdown } from "react-native-element-dropdown";
 
 export default function App() {
   const [text, setText] = useState("");
   const [postal, setPostal] = useState("");
   const [long, setLong] = useState(null);
   const [lat, setLat] = useState("");
-  const [location, setLocation] = useState("");
   const [locationOne, setLocationOne] = useState("");
   const [addOne, setAddOne] = useState("");
+  const [label, setLabel] = useState("");
+  const [value, setValue] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
+
+  const data = [
+    { label: "Coffee shop", value: "1" },
+    { label: "Pizza", value: "2" },
+  ];
 
   const apiKey =
     "YOUR_API_KEY";
   const authentication = ApiKeyManager.fromKey(apiKey);
+
+  const DropdownComponent = () => {
+    const renderLabel = () => {
+      if (value || isFocus) {
+        return (
+          <Text style={[styles.label, isFocus && { color: "blue" }]}>
+            Dropdown label
+          </Text>
+        );
+      }
+      return null;
+    };
+  };
 
   const getCoords = () => {
     geocode({
@@ -42,15 +63,15 @@ export default function App() {
   useEffect(() => {
     LogBox.ignoreAllLogs();
     if (long) {
-      setLocation(`${long},${lat}`);
       testAPI();
+      console.log(label);
     }
-  }, [long, lat]);
+  }, [long, lat, label]);
 
   const testAPI = () => {
     geocode({
       params: {
-        category: "coffee shop",
+        category: label,
         distance: 2000,
         location: `${long},${lat}`,
         maxLocations: 3,
@@ -67,8 +88,32 @@ export default function App() {
 
   return (
     <>
+      <View style={styles.categories}>
+        <Dropdown
+          style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={data}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? "Select item" : "..."}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={(item) => {
+            setValue(item.value);
+            setIsFocus(false);
+            setLabel(item.label);
+          }}
+        />
+      </View>
       <View style={styles.container}>
-        <Text style={styles.title}>Nearest Coffee Shop</Text>
+        <Text style={styles.title}>Nearest {label}</Text>
         <TextInput
           onChangeText={(add) => setText(add)}
           placeholder="Enter Address"
@@ -95,8 +140,13 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  categories: {
     marginTop: 100,
+    backgroundColor: "white",
+    padding: 16,
+  },
+  container: {
+    marginTop: 30,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
@@ -136,9 +186,42 @@ const styles = StyleSheet.create({
   },
   shop: {
     fontSize: 18,
-    marginBottom: 8
+    marginBottom: 8,
   },
   shopStuff: {
-    marginLeft: 20
-  }
+    marginLeft: 20,
+  },
+  dropdown: {
+    height: 30,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: "absolute",
+    backgroundColor: "white",
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 6,
+    fontSize: 12,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
 });
