@@ -33,19 +33,6 @@ export default function App() {
     "YOUR_API_KEY";
   const authentication = ApiKeyManager.fromKey(apiKey);
 
-  const DropdownComponent = () => {
-    const renderLabel = () => {
-      if (value || isFocus) {
-        return (
-          <Text style={[styles.label, isFocus && { color: "blue" }]}>
-            Dropdown label
-          </Text>
-        );
-      }
-      return null;
-    };
-  };
-
   const getCoords = () => {
     Keyboard.dismiss();
     geocode({
@@ -89,31 +76,9 @@ export default function App() {
 
   return (
     <>
-      <View style={styles.categories}>
-        <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={data}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder={!isFocus ? "Select a Category of Shop" : "..."}
-          searchPlaceholder="Search..."
-          value={value}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={(item) => {
-            setValue(item.value);
-            setIsFocus(false);
-            setLabel(item.label);
-          }}
-        />
-      </View>
       <View style={styles.container}>
+        <Text style={styles.theTitle}>Find a Place App</Text>
+        <Text style={styles.otherTitle}>using ArcGIS REST JS</Text>
         <TextInput
           onChangeText={(add) => setText(add)}
           placeholder="Enter Address"
@@ -125,11 +90,33 @@ export default function App() {
           style={styles.textInput}
         />
         <StatusBar style="auto" />
-        <View style={styles.buttonContainer}>
-          <Pressable onPress={getCoords} style={styles.press}>
-            <Text style={styles.text}>Locate Shop</Text>
-          </Pressable>
-        </View>
+      </View>
+      <View style={styles.categories}>
+        <Dropdown
+          style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          data={data}
+          search
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? "Select Place Category" : "..."}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={(item) => {
+            setValue(item.value);
+            setIsFocus(false);
+            setLabel(item.label);
+          }}
+        />
+      </View>
+      <View style={styles.buttonContainer}>
+        <Pressable onPress={getCoords} style={styles.press}>
+          <Text style={styles.text}>Locate Place</Text>
+        </Pressable>
       </View>
       <View style={styles.shopStuff}>
         <Text style={styles.shop}>{locationOne}</Text>
@@ -140,21 +127,23 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  categories: {
-    marginTop: 100,
-    backgroundColor: "white",
-    padding: 16,
-  },
   container: {
-    marginTop: 30,
+    marginTop: 100,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
+  theTitle: {
+    fontSize: 30
+  },
+  otherTitle: {
+    fontSize: 22,
+    marginBottom: 20,
+  },
   textInput: {
-    fontSize: 20,
+    fontSize: 18,
     padding: 10,
-    margin: 10,
+    marginBottom: 10,
     borderColor: "#000000",
     borderWidth: 1,
     width: 250,
@@ -180,48 +169,32 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  title: {
-    fontSize: 30,
-    marginBottom: 15,
-  },
   shop: {
-    fontSize: 18,
+    fontSize: 20,
     marginBottom: 8,
   },
   shopStuff: {
-    marginLeft: 20,
+    margin: 20,
+    padding: 10,
+    borderRadius: 7,
+  },
+  categories: {
+    backgroundColor: "white",
+    alignItems: "center",
   },
   dropdown: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
-  },
-  icon: {
-    marginRight: 5,
-  },
-  label: {
-    position: "absolute",
-    backgroundColor: "white",
-    left: 22,
-    top: 8,
-    zIndex: 999,
-    paddingHorizontal: 6,
-    fontSize: 12,
+    width: 250,
+    borderColor: "black",
+    borderWidth: 1,
+    padding: 7,
+    fontSize: 22,
   },
   placeholderStyle: {
-    fontSize: 16,
-  },
-  selectedTextStyle: {
-    fontSize: 16,
-  },
-  iconStyle: {
-    width: 20,
-    height: 20,
+    fontSize: 18,
+    color: "gray"
   },
   inputSearchStyle: {
     height: 40,
-    fontSize: 16,
+    fontSize: 18,
   },
 });
