@@ -25,8 +25,17 @@ export default function App() {
   const [isFocus, setIsFocus] = useState(false);
 
   const data = [
-    { label: "Coffee shop", value: "1" },
+    { label: "Coffee Shop", value: "1" },
     { label: "Pizza", value: "2" },
+    { label: "Bakery", value: "3" },
+    { label: "Breakfast", value: "4" },
+    { label: "Brewpub", value: "5" },
+    { label: "Chinese Food", value: "6" },
+    { label: "Ice Cream Shop", value: "7" },
+    { label: "Mexican Food", value: "8" },
+    { label: "Seafood", value: "9" },
+    { label: "Sushi", value: "10" },
+    { label: "Winery", value: "11" },
   ];
 
   const apiKey =
@@ -134,7 +143,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   theTitle: {
-    fontSize: 30
+    fontSize: 30,
   },
   otherTitle: {
     fontSize: 22,
@@ -191,7 +200,7 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 18,
-    color: "gray"
+    color: "gray",
   },
   inputSearchStyle: {
     height: 40,
