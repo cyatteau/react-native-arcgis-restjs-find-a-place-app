@@ -4,6 +4,7 @@
 This app uses two ArcGIS REST JS packages to return the location of a place nearest an address.
 
 ## Live Demo Clip
+![Find-a-place-demo](https://user-images.githubusercontent.com/112517097/206937008-f70272d8-2af9-462c-8547-a66e737bbaed.gif)
 
 ## Required Dependencies
 - `npm install @esri/arcgis-rest-request`
