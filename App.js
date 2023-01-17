@@ -31,15 +31,15 @@ export default function App() {
     { label: "Breakfast", value: "4" },
     { label: "Brewpub", value: "5" },
     { label: "Chinese Food", value: "6" },
-    { label: "Ice Cream Shop", value: "7" },
-    { label: "Mexican Food", value: "8" },
-    { label: "Seafood", value: "9" },
-    { label: "Sushi", value: "10" },
-    { label: "Winery", value: "11" },
+    { label: "Hotel", value: "7" },
+    { label: "Ice Cream Shop", value: "8" },
+    { label: "Mexican Food", value: "9" },
+    { label: "Seafood", value: "10" },
+    { label: "Sushi", value: "11" },
+    { label: "Winery", value: "12" },
   ];
 
-  const apiKey =
-    "YOUR_API_KEY";
+  const apiKey = "YOUR_API_KEY";
   const authentication = ApiKeyManager.fromKey(apiKey);
 
   const getCoords = () => {
